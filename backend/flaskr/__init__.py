@@ -27,7 +27,7 @@ def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
     # Allow all origins to access any endpoint by setting up CORS
-    CORS(app, resources={'*/*': {'origins': '*'}})
+    CORS(app, resources={'/*': {'origins': '*'}})
     '''
   @TODO-: Set up CORS. Allow '*' for origins. Delete the sample route after completing the TODOs(Done!)
   '''
@@ -38,20 +38,22 @@ def create_app(test_config=None):
     @app.after_request
     def after_request(response):
         response.headers.add('Access-Control-Allow-Headers',
-                             'Content-Type, Authorization')
+                             'Content-Type, Authorization, true')
         response.headers.add('Access-Control-Allow-Methods',
                              'GET, POST, PATCH, DELETE, OPTIONS')
+        return response
 
     '''
   @TODO: 
   Create an endpoint to handle GET requests 
   for all available categories.
   '''
-    @app.route('/categories', methods=['GET'])
+    @app.route('/categories')
     def retrieve_categories():
-        categories = Category.query.order_by(Category.id).all()
+        categories = Category.query.all()
 
-        if len(categories) < 1: abort(404)
+        if len(categories) < 1:
+            abort(404)
 
         formatted_categories = [category.format() for category in categories]
         return jsonify({
@@ -129,5 +131,12 @@ def create_app(test_config=None):
   Create error handlers for all expected errors 
   including 404 and 422. 
   '''
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+            'success': False,
+            'error': 404,
+            'message': 'Resource not found'
+        }), 404
 
     return app
