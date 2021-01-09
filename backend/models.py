@@ -29,6 +29,7 @@ def setup_db(app, database_path=DB_URI):
     db.app = app
     db.init_app(app)
     migrate.init_app(app, db)
+    # db.create_all()
 
 
 '''
