@@ -8,6 +8,13 @@ from ..models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
 
+def format_category_list(categories):
+    cats = dict()
+    for category in categories:
+        cats[category.id] = category.type
+    
+    return cats
+
 
 def paginate_questions(request, questions):
     """
@@ -56,7 +63,7 @@ def create_app(test_config=None):
             if len(categories) < 1:
                 abort(404)
 
-            formatted_categories = [category.format() for category in categories]
+            formatted_categories = format_category_list(categories)
             return jsonify({
                 'success': True,
                 'categories': formatted_categories,
@@ -87,7 +94,7 @@ def create_app(test_config=None):
             # print(paginated_questions)
             
             categories = Category.query.order_by(Category.id).all()
-            formatted_categories = [category.format() for category in categories]
+            formatted_categories = format_category_list(categories)
 
             return jsonify({
                 'success': True,
