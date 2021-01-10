@@ -189,7 +189,7 @@ def create_app(test_config=None):
         }), 404
 
     @app.errorhandler(500)
-    def server_error(erro):
+    def server_error(error):
         return jsonify({
             'success': False,
             'error': 500,
