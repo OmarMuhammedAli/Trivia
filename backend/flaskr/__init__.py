@@ -8,11 +8,12 @@ from ..models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
 
+
 def format_category_list(categories):
     cats = dict()
     for category in categories:
         cats[category.id] = category.type
-    
+
     return cats
 
 
@@ -69,7 +70,7 @@ def create_app(test_config=None):
                 'categories': formatted_categories,
                 'total_categories': len(categories)
             })
-        except: 
+        except:
             abort(500)
 
     '''
@@ -87,12 +88,13 @@ def create_app(test_config=None):
     @app.route('/questions')
     def retrieve_paginated_questions():
 
-        try: 
+        try:
             questions = Question.query.order_by(Question.id).all()
-            if len(questions) < 1: abort(404)
+            if len(questions) < 1:
+                abort(404)
             paginated_questions = paginate_questions(request, questions)
             # print(paginated_questions)
-            
+
             categories = Category.query.order_by(Category.id).all()
             formatted_categories = format_category_list(categories)
 
@@ -113,7 +115,23 @@ def create_app(test_config=None):
   TEST: When you click the trash icon next to a question, the question will be removed.
   This removal will persist in the database and when you refresh the page. 
   '''
-
+    @app.route('/questions/<int:question_id>', methods=['DELETE'])
+    def delete_question(question_id):
+        exists = True
+        try: 
+            question = Question.query.get(question_id)
+            if question is None: 
+                abort(404)
+                exists = False
+            question.delete()
+        except: 
+            if not exists: abort(404)
+            else: abort(500)
+        
+        return jsonify({
+            'success': True,
+            'total_question': len(Question.query.all())
+        }), 200
     '''
   @TODO: 
   Create an endpoint to POST a new question, 
