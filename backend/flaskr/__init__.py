@@ -155,7 +155,7 @@ def create_app(test_config=None):
         difficulty = data.get('difficulty', '')
         if len(question) < 1 or len(answer) < 1: abort(422)
         # Prevent addition of already existing questions
-        if question in questions_literals: abort(403)
+        if question in questions_literals: abort(400)
 
         
         try: 
@@ -186,6 +186,26 @@ def create_app(test_config=None):
   only question that include that string within their question. 
   Try using the word "title" to start. 
   '''
+    @app.route('/search', methods=['POST'])
+    def search_for_a_question():
+        search_term = request.get_json().get('searchTerm', '')
+        if len(search_term) < 1: abort(422)
+
+        questions = Question.query.order_by(Question.id).filter(Question.question.ilike(f'%{search_term}%')).all()
+        if len(questions) < 1: abort(404)
+        formatted_questions = paginate_questions(request, questions)
+
+        categories = Category.query.order_by(Category.id).all()
+        formatted_categories = format_category_list(categories)
+
+
+        return jsonify({
+            'success': True,
+            'questions': formatted_questions,
+            'total_questions': len(questions),
+            'categories': formatted_categories,
+            'current_categroy': None
+        }), 200
 
     '''
   @TODO: 
@@ -237,13 +257,12 @@ def create_app(test_config=None):
             'message': 'Unprocessable'
         }), 422
 
-    @app.errorhandler(403)
+    @app.errorhandler(400)
     def forbidden(error): 
         return jsonify({
             'success': False,
-            'error': 403,
+            'error': 400,
             'message': 'Forbidden action',
-            'reason': 'Question already exists'
-        })
+        }), 400
 
     return app
