@@ -134,15 +134,47 @@ def create_app(test_config=None):
             'total_question': len(Question.query.all())
         }), 200
     '''
-  @TODO: 
+  @TODO-: 
   Create an endpoint to POST a new question, 
   which will require the question and answer text, 
   category, and difficulty score.
 
   TEST: When you submit a question on the "Add" tab, 
   the form will clear and the question will appear at the end of the last page
-  of the questions list in the "List" tab.  
+  of the questions list in the "List" tab.  (Done!)
   '''
+    @app.route('/questions', methods=['POST'])
+    def submit_question():
+
+        question_objects = Question.query.all()
+        questions_literals = [qn.format()['question'] for qn in question_objects]
+        data = request.get_json()
+        question = data.get('question', '')
+        answer = data.get('answer', '')
+        category = data.get('category', '')
+        difficulty = data.get('difficulty', '')
+        if len(question) < 1 or len(answer) < 1: abort(422)
+        # Prevent addition of already existing questions
+        if question in questions_literals: abort(403)
+
+        
+        try: 
+            new_question = Question(
+                question,
+                answer,
+                category,
+                difficulty
+            )
+            new_question.insert()
+            new_question.update()
+        
+        except:
+            abort(422)
+
+        return jsonify({
+            'success': True,
+            'total_questions': len(Question.query.all())
+        }), 200
 
     '''
   @TODO: 
@@ -195,5 +227,23 @@ def create_app(test_config=None):
             'success': False,
             'error': 500,
             'message': 'Internal server error'
+        }), 500
+
+    @app.errorhandler(422)
+    def unprocessable(error):
+        return jsonify({
+            'success': False,
+            'error': 422,
+            'message': 'Unprocessable'
+        }), 422
+
+    @app.errorhandler(403)
+    def forbidden(error): 
+        return jsonify({
+            'success': False,
+            'error': 403,
+            'message': 'Forbidden action',
+            'reason': 'Question already exists'
         })
+
     return app
