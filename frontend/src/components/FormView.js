@@ -52,7 +52,7 @@ class FormView extends Component {
         return;
       },
       error: (error) => {
-        if (error.status === 403) {
+        if (error.status === 400) {
             alert("Question already exists!")
         }
         else {
