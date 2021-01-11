@@ -174,29 +174,33 @@ def create_app(test_config=None):
         return jsonify({
             'success': True,
             'total_questions': len(Question.query.all())
-        }), 200
+        }), 201
 
     '''
-  @TODO: 
+  @TODO-: 
   Create a POST endpoint to get questions based on a search term. 
   It should return any questions for whom the search term 
   is a substring of the question. 
 
   TEST: Search by any phrase. The questions list will update to include 
   only question that include that string within their question. 
-  Try using the word "title" to start. 
+  Try using the word "title" to start. (Done!)
   '''
     @app.route('/search', methods=['POST'])
     def search_for_a_question():
-        search_term = request.get_json().get('searchTerm', '')
-        if len(search_term) < 1: abort(422)
 
-        questions = Question.query.order_by(Question.id).filter(Question.question.ilike(f'%{search_term}%')).all()
-        if len(questions) < 1: abort(404)
-        formatted_questions = paginate_questions(request, questions)
+        try:
+            search_term = request.get_json().get('searchTerm', '')
+            if len(search_term) < 1: abort(422)
 
-        categories = Category.query.order_by(Category.id).all()
-        formatted_categories = format_category_list(categories)
+            questions = Question.query.order_by(Question.id).filter(Question.question.ilike(f'%{search_term}%')).all()
+            if len(questions) < 1: abort(404)
+            formatted_questions = paginate_questions(request, questions)
+
+            categories = Category.query.order_by(Category.id).all()
+            formatted_categories = format_category_list(categories)
+        except:
+            abort(500)
 
 
         return jsonify({
@@ -205,7 +209,7 @@ def create_app(test_config=None):
             'total_questions': len(questions),
             'categories': formatted_categories,
             'current_categroy': None
-        }), 200
+        }), 201
 
     '''
   @TODO: 
