@@ -264,6 +264,8 @@ def create_app(test_config=None):
             questions = Question.query.all()
         else:
             questions = Question.query.filter(Question.category == category['id']).all()
+        
+        if len(questions) < 1: abort(404)
 
         while True:
             if len(previous_questions) == len(questions): 
