@@ -64,12 +64,12 @@ Omit the dropdb command the first time you run tests.
 
 ### Getting Started
 
-* Base URL: Currently this application is only hosted locally. The backend is hosted at `http://127.0.0.1:5000/`
+* Base URL:This application is only hosted locally at the moment `http://127.0.0.1:5000/`
 * Authentication: This version does not require authentication or API keys.
 
 ### Error Handling
 
-Errors are returned as JSON in the following format:<br>
+Errors are returned as JSON and are formatted in the following manner:<br>
 
     {
         "success": False,
@@ -77,7 +77,7 @@ Errors are returned as JSON in the following format:<br>
         "message": "resource not found"
     }
 
-The API will return three types of errors:
+The user may encounter 3 types of errors using this API:
 
 * 400 – bad request
 * 404 – resource not found
@@ -106,95 +106,96 @@ The API will return three types of errors:
 #### GET /questions
 
 * General:
-  * Returns a list questions.
-  * Results are paginated in groups of 10.
-  * Also returns list of categories and total number of questions.
+  * Returns a list questions paginated in groups of 10.
 * Sample: `curl http://127.0.0.1:5000/questions`<br>
 
+        ```
+            {
+    "categories": {
+        "1": "Science",
+        "2": "Art",
+        "3": "Geography",
+        "4": "History",
+        "5": "Entertainment",
+        "6": "Sports"
+    },
+    "current_category": null,
+    "questions": [
         {
-            "categories": {
-                "1": "Science", 
-                "2": "Art", 
-                "3": "Geography", 
-                "4": "History", 
-                "5": "Entertainment", 
-                "6": "Sports"
-            }, 
-            "questions": [
-                {
-                    "answer": "Colorado, New Mexico, Arizona, Utah", 
-                    "category": 3, 
-                    "difficulty": 3, 
-                    "id": 164, 
-                    "question": "Which four states make up the 4 Corners region of the US?"
-                }, 
-                {
-                    "answer": "Muhammad Ali", 
-                    "category": 4, 
-                    "difficulty": 1, 
-                    "id": 9, 
-                    "question": "What boxer's original name is Cassius Clay?"
-                }, 
-                {
-                    "answer": "Apollo 13", 
-                    "category": 5, 
-                    "difficulty": 4, 
-                    "id": 2, 
-                    "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
-                }, 
-                {
-                    "answer": "Tom Cruise", 
-                    "category": 5, 
-                    "difficulty": 4, 
-                    "id": 4, 
-                    "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
-                }, 
-                {
-                    "answer": "Edward Scissorhands", 
-                    "category": 5, 
-                    "difficulty": 3, 
-                    "id": 6, 
-                    "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
-                }, 
-                {
-                    "answer": "Brazil", 
-                    "category": 6, 
-                    "difficulty": 3, 
-                    "id": 10, 
-                    "question": "Which is the only team to play in every soccer World Cup tournament?"
-                }, 
-                {
-                    "answer": "Uruguay", 
-                    "category": 6, 
-                    "difficulty": 4, 
-                    "id": 11, 
-                    "question": "Which country won the first ever soccer World Cup in 1930?"
-                }, 
-                {
-                    "answer": "George Washington Carver", 
-                    "category": 4, 
-                    "difficulty": 2, 
-                    "id": 12, 
-                    "question": "Who invented Peanut Butter?"
-                }, 
-                {
-                    "answer": "Lake Victoria", 
-                    "category": 3, 
-                    "difficulty": 2, 
-                    "id": 13, 
-                    "question": "What is the largest lake in Africa?"
-                }, 
-                {
-                    "answer": "The Palace of Versailles", 
-                    "category": 3, 
-                    "difficulty": 3, 
-                    "id": 14, 
-                    "question": "In which royal palace would you find the Hall of Mirrors?"
-                }
-            ], 
-            "success": true, 
-            "total_questions": 19
+            "answer": "Maya Angelou",
+            "category": "4",
+            "difficulty": 2,
+            "id": 5,
+            "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
+        },
+        {
+            "answer": "Muhammad Ali",
+            "category": "4",
+            "difficulty": 1,
+            "id": 9,
+            "question": "What boxer's original name is Cassius Clay?"
+        },
+        {
+            "answer": "Brazil",
+            "category": "6",
+            "difficulty": 3,
+            "id": 10,
+            "question": "Which is the only team to play in every soccer World Cup tournament?"
+        },
+        {
+            "answer": "Uruguay",
+            "category": "6",
+            "difficulty": 4,
+            "id": 11,
+            "question": "Which country won the first ever soccer World Cup in 1930?"
+        },
+        {
+            "answer": "George Washington Carver",
+            "category": "4",
+            "difficulty": 2,
+            "id": 12,
+            "question": "Who invented Peanut Butter?"
+        },
+        {
+            "answer": "Lake Victoria",
+            "category": "3",
+            "difficulty": 2,
+            "id": 13,
+            "question": "What is the largest lake in Africa?"
+        },
+        {
+            "answer": "The Palace of Versailles",
+            "category": "3",
+            "difficulty": 3,
+            "id": 14,
+            "question": "In which royal palace would you find the Hall of Mirrors?"
+        },
+        {
+            "answer": "Mona Lisa",
+            "category": "2",
+            "difficulty": 3,
+            "id": 17,
+            "question": "La Giaconda is better known as what?"
+        },
+        {
+            "answer": "One",
+            "category": "2",
+            "difficulty": 4,
+            "id": 18,
+            "question": "How many paintings did Van Gogh sell in his lifetime?"
+        },
+        {
+            "answer": "Jackson Pollock",
+            "category": "2",
+            "difficulty": 2,
+            "id": 19,
+            "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
         }
+    ],
+    "success": true,
+    "total_questions": 21
+}
+        ```
 
 #### DELETE /questions/\<int:id\>
 
