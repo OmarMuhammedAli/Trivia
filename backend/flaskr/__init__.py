@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import random
 
-from ..models import setup_db, Question, Category
+from .models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
 
@@ -71,9 +71,10 @@ def create_app(test_config=None):
 
         try:
             questions = Question.query.order_by(Question.id).all()
-            if len(questions) < 1:
-                abort(404)
+            
             paginated_questions = paginate_questions(request, questions)
+            if len(paginated_questions) < 1:
+                abort(404)
             # print(paginated_questions)
 
             categories = Category.query.order_by(Category.id).all()
@@ -87,7 +88,7 @@ def create_app(test_config=None):
                 'categories': formatted_categories
             }), 200
         except:
-            abort(500)
+            abort(404)
 
 
     @app.route('/questions/<int:question_id>', methods=['DELETE'])
@@ -120,10 +121,10 @@ def create_app(test_config=None):
         answer = data.get('answer', '')
         category = data.get('category', '')
         difficulty = data.get('difficulty', '')
-        if len(question) < 1 or len(answer) < 1: abort(422)
+        if len(question) < 1 or len(answer) < 1: abort(400)
         # Prevent addition of already existing questions
         if question in questions_literals: abort(400)
-
+        new_question_id = None
         
         try: 
             new_question = Question(
@@ -133,14 +134,15 @@ def create_app(test_config=None):
                 difficulty
             )
             new_question.insert()
-            new_question.update()
+            new_question_id = new_question.id
         
         except:
             abort(422)
 
         return jsonify({
             'success': True,
-            'total_questions': len(Question.query.all())
+            'total_questions': len(Question.query.all()),
+            'question_id': new_question_id
         }), 201
 
 
@@ -148,7 +150,8 @@ def create_app(test_config=None):
     def search_for_a_question():
 
         try:
-            search_term = request.get_json().get('searchTerm', '')
+            data = request.get_json()
+            search_term = data.get('searchTerm', '')
             if len(search_term) < 1: abort(422)
 
             questions = Question.query.order_by(Question.id).filter(Question.question.ilike(f'%{search_term}%')).all()
@@ -158,7 +161,7 @@ def create_app(test_config=None):
             categories = Category.query.order_by(Category.id).all()
             formatted_categories = format_category_list(categories)
         except:
-            abort(500)
+            abort(404)
 
 
         return jsonify({
@@ -181,7 +184,7 @@ def create_app(test_config=None):
 
             formatted_question = paginate_questions(request, questions)
         except:
-            abort(500)
+            abort(404)
 
         return jsonify({
             'success': True,
@@ -254,7 +257,7 @@ def create_app(test_config=None):
         return jsonify({
             'success': False,
             'error': 400,
-            'message': 'Forbidden action',
+            'message': 'Bad request',
         }), 400
 
     return app
