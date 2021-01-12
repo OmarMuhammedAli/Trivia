@@ -13,23 +13,23 @@ DB_URI = {
     'port': '5432',
     'database': 'trivia'
 }
-
+database_path=URL(**DB_URI)
 
 db = SQLAlchemy()
-migrate = Migrate()
+# migrate = Migrate()
 '''
 setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
 
 
-def setup_db(app, database_path=DB_URI):
-    app.config["SQLALCHEMY_DATABASE_URI"] = URL(**database_path)
+def setup_db(app, database_path=database_path):
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-    migrate.init_app(app, db)
-    # db.create_all()
+    # migrate.init_app(app, db)
+    db.create_all()
 
 
 '''
