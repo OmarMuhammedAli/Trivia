@@ -394,7 +394,7 @@ This endpoit search for a list of questions based on a search term.
                 }
             ], 
             "success": true, 
-            "total_questions": 18
+            "total_questions": 3
         }
 
 #### POST /quizzes
