@@ -2,7 +2,6 @@ import os
 from sqlalchemy import Column, String, Integer, create_engine
 from sqlalchemy.engine.url import URL
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 import json
 
 DB_URI = {
@@ -16,7 +15,7 @@ DB_URI = {
 database_path=URL(**DB_URI)
 
 db = SQLAlchemy()
-# migrate = Migrate()
+
 '''
 setup_db(app)
     binds a flask application and a SQLAlchemy service
@@ -28,7 +27,6 @@ def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-    # migrate.init_app(app, db)
     db.create_all()
 
 
