@@ -1,17 +1,17 @@
-import os
-from sqlalchemy import Column, String, Integer, create_engine
+from sqlalchemy import Column, String, Integer
 from sqlalchemy.engine.url import URL
 from flask_sqlalchemy import SQLAlchemy
-import json
+from decouple import config
 
 DB_URI = {
-    'drivername': 'postgres',
-    'username': 'horizon',
-    'password': '0105415595',
-    'host': 'localhost',
-    'port': '5432',
-    'database': 'trivia'
+    'drivername': config('DRIVER_NAME'),
+    'username': config('USERNAME'),
+    'password': config('PASSWORD'),
+    'host': config('HOST'),
+    'port': config('DB_PORT'),
+    'database': config('DB_NAME')
 }
+
 database_path=URL(**DB_URI)
 
 db = SQLAlchemy()

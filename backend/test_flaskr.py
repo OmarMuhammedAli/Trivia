@@ -1,8 +1,7 @@
-import os
-import sys
 import unittest
 import json
 from flask_sqlalchemy import SQLAlchemy
+from decouple import config
 
 from flaskr import create_app
 from flaskr.models import setup_db, Question, Category
@@ -14,9 +13,8 @@ class TriviaTestCase(unittest.TestCase):
         """Define test variables and initialize app."""
         self.app = create_app()
         self.client = self.app.test_client
-        self.database_name = "trivia_test"
-        self.database_path = "postgres://{}@{}/{}".format(
-            'horizon:0105415595', 'localhost:5432', self.database_name)
+        self.database_name = config('TEST_DB_NAME')
+        self.database_path = config('TEST_DB_PATH')
         setup_db(self.app, self.database_path)
 
         # sample question for use in tests
