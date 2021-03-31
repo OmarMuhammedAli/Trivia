@@ -1,5 +1,5 @@
 # Full Stack Trivia API
-This project is a game where users can test their knowledge answering trivia questions. The task for the project was to create an API and test suite for implementing the following functionality:
+This appilcation is an interactive game where players can test their knowledge answering trivia questions. The main tasks were to create a Flask RESTful API, essential database models, and a test suite for implementing the following functionality:
 
 1) Display questions - both all questions and by category. Questions should show the question, category and difficulty rating by default and can show/hide the answer. 
 2) Delete questions.
@@ -10,7 +10,7 @@ This project is a game where users can test their knowledge answering trivia que
 ## Getting Started
 
 ### Installing Dependencies
-Developers using this project should already have Python3, pip, node, and npm installed.
+Developers using this project should already have [Python3](https://www.python.org/downloads/), [pip](https://pip.pypa.io/en/stable/installing/), [node](https://nodejs.org/en/download/), and [npm](https://www.npmjs.com/get-npm) installed.
 
 #### Frontend Dependencies
 
