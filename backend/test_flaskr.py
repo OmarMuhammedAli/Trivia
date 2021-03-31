@@ -21,7 +21,7 @@ class TriviaTestCase(unittest.TestCase):
 
         # sample question for use in tests
         self.new_question = {
-            'question': 'In which year did the Egyptian revolution "25th of January" occur?',
+            'question': 'In what year did the Egyptian revolution "25th of January" occur?',
             'answer': '2011',
             'difficulty': 2,
             'category': '4'
@@ -35,7 +35,7 @@ class TriviaTestCase(unittest.TestCase):
             self.db.create_all()
 
     def tearDown(self):
-        """Executed after reach test"""
+        """Executed after each test"""
         pass
 
     def test_retrieve_paginated_questions(self):
