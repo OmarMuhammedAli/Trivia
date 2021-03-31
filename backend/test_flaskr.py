@@ -1,20 +1,22 @@
 import unittest
 import json
 from flask_sqlalchemy import SQLAlchemy
-from decouple import config
+from dotenv import dotenv_values
 
 from flaskr import create_app
 from flaskr.models import setup_db, Question, Category
+
 
 class TriviaTestCase(unittest.TestCase):
     """This class represents the trivia test case"""
 
     def setUp(self):
         """Define test variables and initialize app."""
+        config = dotenv_values('.env')
         self.app = create_app()
         self.client = self.app.test_client
-        self.database_name = config('TEST_DB_NAME')
-        self.database_path = config('TEST_DB_PATH')
+        self.database_name = config['TEST_DB_NAME']
+        self.database_path = config['TEST_DB_PATH']
         setup_db(self.app, self.database_path)
 
         # sample question for use in tests
@@ -46,11 +48,10 @@ class TriviaTestCase(unittest.TestCase):
         # check status code and message
         self.assertEqual(data['success'], True)
         self.assertEqual(response.status_code, 200)
-        
+
         # check that total_questions and questions return data
         self.assertTrue(len(data['questions']))
         self.assertTrue(data['total_questions'])
-        
 
     def test_retrieve_paginated_question_fails_404(self):
         """Tests failure 404 question pagination"""
@@ -66,14 +67,14 @@ class TriviaTestCase(unittest.TestCase):
 
     def test_delete_question_success(self):
         """Tests question deletion success"""
-        
+
         # create a new question to be deleted
         question = Question(
-            question=self.new_question['question'], 
-            answer=self.new_question['answer'], 
-            category=self.new_question['category'], 
+            question=self.new_question['question'],
+            answer=self.new_question['answer'],
+            category=self.new_question['category'],
             difficulty=self.new_question['difficulty']
-            )
+        )
         question.insert()
 
         # total questions before deletion
@@ -98,7 +99,6 @@ class TriviaTestCase(unittest.TestCase):
         question = Question.query.get(question_id)
         self.assertEqual(question, None)
 
-
     def test_delete_question_fails_404(self):
         """Tests if deletion of a non-existing question fails"""
 
@@ -110,7 +110,6 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Resource not found')
-
 
     def test_create_new_question(self):
         """Tests question creation success"""
@@ -157,7 +156,6 @@ class TriviaTestCase(unittest.TestCase):
         # check if questions_after and questions_before are equal
         self.assertTrue(len(questions_after) == len(questions_before))
 
-
     def test_search_questions(self):
         """Tests search questions success"""
 
@@ -176,7 +174,6 @@ class TriviaTestCase(unittest.TestCase):
         # Check the id of the first result in response
         self.assertEqual(data['questions'][0]['id'], 2)
 
-
     def test_404_if_search_questions_fails(self):
         """Tests search questions failure 404"""
 
@@ -189,7 +186,6 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Resource not found')
-
 
     def test_get_questions_by_category(self):
         """Tests getting questions by category success"""
@@ -207,7 +203,6 @@ class TriviaTestCase(unittest.TestCase):
 
         # check that current category returned is History
         self.assertEqual(data['current_category'], 'History')
-
 
     def test_404_if_questions_by_category_fails(self):
         """Tests getting questions by category failure 404"""
@@ -242,7 +237,6 @@ class TriviaTestCase(unittest.TestCase):
         self.assertNotEqual(data['question']['id'], 9)
         self.assertNotEqual(data['question']['id'], 5)
         self.assertNotEqual(data['question']['id'], 12)
-
 
     def test_play_quiz_fails(self):
         """Tests playing quiz game failure 400"""

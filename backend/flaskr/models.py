@@ -1,18 +1,22 @@
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.engine.url import URL
 from flask_sqlalchemy import SQLAlchemy
-from decouple import config
+
+from dotenv import dotenv_values
+
+config = dotenv_values('.env')
+
 
 DB_URI = {
-    'drivername': config('DRIVER_NAME'),
-    'username': config('USERNAME'),
-    'password': config('PASSWORD'),
-    'host': config('HOST'),
-    'port': config('DB_PORT'),
-    'database': config('DB_NAME')
+    'drivername': config['DRIVER_NAME'],
+    'username': config['USERNAME'],
+    'password': config['PASSWORD'],
+    'host': config['HOST'],
+    'port': config['DB_PORT'],
+    'database': config['DB_NAME']
 }
 
-database_path=URL(**DB_URI)
+database_path = URL(**DB_URI)
 
 db = SQLAlchemy()
 
@@ -86,4 +90,3 @@ class Category(db.Model):
 
     def __init__(self, type):
         self.type = type
-
