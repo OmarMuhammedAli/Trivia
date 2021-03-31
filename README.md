@@ -1,4 +1,4 @@
-# Full Stack Trivia API Project
+# Full Stack Trivia API
 This project is a game where users can test their knowledge answering trivia questions. The task for the project was to create an API and test suite for implementing the following functionality:
 
 1) Display questions - both all questions and by category. Questions should show the question, category and difficulty rating by default and can show/hide the answer. 
@@ -64,8 +64,8 @@ Omit the dropdb command the first time you run tests.
 
 ### Getting Started
 
-* Base URL:This application is only hosted locally at the moment `http://127.0.0.1:5000/`
-* Authentication: This version does not require authentication or API keys.
+* Base URL:This application is hosted locally at `http://127.0.0.1:5000/`. A public URL will be added here once the application is deployed.
+* Authentication: No authentication or API keys are required for this version of the application.
 
 ### Error Handling
 
@@ -213,12 +213,7 @@ This endpoint creates a new question.
 * General:
   * Creates a new question using JSON request parameters.
   * Returns JSON object with newly created question, as well as paginated questions.
-* Sample: ```curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d  '{
-            "question": "In which year did the egyptian revolution occur?",
-            "answer": "2011",
-            "difficulty": 2,
-            "category": "4"
-        }'<br>
+* Sample: ```curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"question": "In which year did the egyptian revolution occur?", "answer": "2011", "difficulty": 2, "category": "4"}'<br>
 ```
    {
         "categories": {
@@ -419,5 +414,4 @@ This endpoit search for a list of questions based on a search term.
 
 ## Authors
 
-The API (`__init__.py`), test suite (`test_flaskr.py`), and this README were authored by Omar Muhammed Ali.<br>
-All other project files, including the models and frontend(except for some minor changes in the frontend and models were also made by Omar Muhammed Ali for consistency), were created by [Udacity](https://www.udacity.com/) as a project template for the [Full Stack Web Developer Nanodegree](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd0044).
+The API (`__init__.py`), test suite (`test_flaskr.py`), Database models (`models.py`), Utilities (`utils.py`), and this README were authored by [Omar Muhammed Ali](https://github.com/OmarMuhammedAli).<br>
