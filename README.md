@@ -213,7 +213,7 @@ This endpoint creates a new question.
 * General:
   * Creates a new question using JSON request parameters.
   * Returns JSON object with newly created question, as well as paginated questions.
-* Sample: ```curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"question": "In which year did the egyptian revolution occur?", "answer": "2011", "difficulty": 2, "category": "4"}'<br>
+* Sample: ```curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"question": "In which year did the egyptian revolution occur?", "answer": "2011", "difficulty": 2, "category": "4"}'```<br>
 ```
    {
         "categories": {
