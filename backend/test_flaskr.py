@@ -151,7 +151,7 @@ class TriviaTestCase(unittest.TestCase):
         # check status code and success message
         self.assertEqual(response.status_code, 400)
         self.assertEqual(data['success'], False)
-        self.assertEquals(data['message'], 'Bad request')
+        self.assertEqual(data['message'], 'Bad request')
 
         # check if questions_after and questions_before are equal
         self.assertTrue(len(questions_after) == len(questions_before))
