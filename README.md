@@ -305,7 +305,7 @@ This endpoint creates a new question.
             }
         ],
         "success": true,
-        "total_questions": 21
+        "total_questions": 22
     }
   ```
 
