@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import dotenv_values
 
 from flaskr import create_app
-from flaskr.models import setup_db, Question, Category
+from flaskr.models import setup_db, Question
 
 
 class TriviaTestCase(unittest.TestCase):
