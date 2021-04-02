@@ -297,10 +297,11 @@ This endpoint creates a new question.
                 "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
             },
             {
-                "question": "In which year did the egyptian revolution occur?",
                 "answer": "2011",
+                "category": "4",
                 "difficulty": 2,
-                "category": "4"
+                "id": 20,
+                "question": "In which year did the egyptian revolution occur?"
             }
         ],
         "success": true,
