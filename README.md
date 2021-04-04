@@ -38,6 +38,21 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser. T
 npm start
 ```
 
+## Setting up the Environment Variables
+
+Create a .env file in the `backend` directory and fill in the values:
+
+```bash
+DRIVER_NAME=......
+USERNAME=......
+PASSWORD=......
+HOST=......
+DB_PORT=......
+DB_NAME=......
+TEST_DB_NAME=trivia_test
+TEST_DB_PATH=......
+```
+
 ## Running the Server
 
 From within the `backend` directory first ensure you are working using your created virtual environment.
@@ -416,3 +431,4 @@ This endpoit search for a list of questions based on a search term.
 ## Authors
 
 The API (`__init__.py`), test suite (`test_flaskr.py`), Database models (`models.py`), Utilities (`utils.py`), and this README were authored by [Omar Muhammed Ali](https://github.com/OmarMuhammedAli).<br>
+The front-end was provided by [Udacity](https://www.udacity.com/) as part of the graduation projects of the Full-Stack Nanodegree.
