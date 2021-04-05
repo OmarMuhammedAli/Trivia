@@ -1,5 +1,5 @@
 # Full Stack Trivia API
-This appilcation is an interactive game where players can test their knowledge answering trivia questions. The main tasks were to create a Flask RESTful API, essential database models, and a test suite for implementing the following functionality:
+This appilcation is an interactive game where players can test their knowledge answering trivia questions. The main tasks were to create a Flask RESTful API, essential database models, a test suite, as well as the API reference and documentation for implementing the following functionality:
 
 1) Display questions - both all questions and by category. Questions should show the question, category and difficulty rating by default and can show/hide the answer. 
 2) Delete questions.
