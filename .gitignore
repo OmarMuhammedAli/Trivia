@@ -4,6 +4,7 @@ venv
 node_modules/
 env
 .env
+.idea
 
 # OS generated files #
 ######################
