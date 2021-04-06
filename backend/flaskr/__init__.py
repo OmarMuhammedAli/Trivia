@@ -7,7 +7,7 @@ from .utils import *
 
 
 def create_app(test_config=None):
-    # create and configure the app
+    """ create and configure the app """
     app = Flask(__name__)
     setup_db(app)
 
@@ -17,6 +17,7 @@ def create_app(test_config=None):
 
     @app.after_request
     def after_request(response):
+        """Add response headers for each response after a request is made"""
         response.headers.add('Access-Control-Allow-Headers',
                              'Content-Type, Authorization, true')
         response.headers.add('Access-Control-Allow-Methods',
@@ -26,12 +27,14 @@ def create_app(test_config=None):
     ##### MAIN ENDPOINTS #####
     @app.route('/categories')
     def retrieve_categories():
+        """Returns a JSON response with the available categories"""
         try:
             categories = Category.query.order_by(Category.id).all()
 
             if len(categories) < 1:
                 abort(404)
 
+            # Use the format_category_list utility to return a category on the format expected by the front-end
             formatted_categories = format_category_list(categories)
             return jsonify({
                 'success': True,
@@ -43,14 +46,15 @@ def create_app(test_config=None):
 
     @app.route('/questions')
     def retrieve_paginated_questions():
-
+        """Returns trivia questions paginated by the specified QUESTIONS_PER_PAGE value from the utils.py file"""
         try:
             questions = Question.query.order_by(Question.id).all()
 
+            # Get paginated questions formatted.
             paginated_questions = paginate_questions(request, questions)
             if len(paginated_questions) < 1:
+                # This mechanism is used to inform the UI if there are no questions present.
                 abort(404)
-            # print(paginated_questions)
 
             categories = Category.query.order_by(Category.id).all()
             formatted_categories = format_category_list(categories)
@@ -67,6 +71,7 @@ def create_app(test_config=None):
 
     @app.route('/questions/<int:question_id>', methods=['DELETE'])
     def delete_question(question_id):
+        """Delete a question using its id retrieved from the front-end"""
         exists = True
         try:
             question = Question.query.get(question_id)
@@ -77,6 +82,7 @@ def create_app(test_config=None):
             question.delete()
         except:
             if not exists:
+                # This mechanism is used to inform the UI if there are no questions present.
                 abort(404)
             else:
                 abort(500)
@@ -88,7 +94,10 @@ def create_app(test_config=None):
 
     @app.route('/questions', methods=['POST'])
     def submit_question():
-
+        """
+        Create a new question and add it to the db
+        Returns JSON object with newly created question, as well as paginated questions.
+        """
         question_objects = Question.query.all()
         questions_literals = [qn.format()['question']
                               for qn in question_objects]
@@ -125,7 +134,10 @@ def create_app(test_config=None):
 
     @app.route('/search', methods=['POST'])
     def search_for_a_question():
-
+        """
+        Search for a list of questions based on a search term
+        Returns JSON object with paginated matching questions.
+        """
         try:
             data = request.get_json()
             search_term = data.get('searchTerm', '')
@@ -153,7 +165,11 @@ def create_app(test_config=None):
 
     @app.route('/categories/<int:category_id>/questions', methods=["GET"])
     def retrieve_questions_by_category(category_id):
+        """
+        Gets questions by category id using url parameters.
+        Returns JSON object with paginated matching results.
 
+        """
         try:
             category = Category.query.get(category_id).type
 
@@ -175,7 +191,11 @@ def create_app(test_config=None):
 
     @app.route('/quizzes', methods=['POST'])
     def get_random_question():
-
+        """
+        Lets the user play a game of trivia.
+        Uses JSON request parameters of category and previous questions.
+        Returns JSON object with random question that hasn't been provided before.
+        """
         data = request.get_json()
         previous_questions = data.get('previous_questions', None)
         category = data.get('quiz_category', None)
