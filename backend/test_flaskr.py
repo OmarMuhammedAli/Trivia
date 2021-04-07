@@ -60,9 +60,11 @@ class TriviaTestCase(unittest.TestCase):
         response = self.client().get('/questions?page=1000')
         data = json.loads(response.data)
 
-        # check status code and message
+        # check status code.
         self.assertEqual(response.status_code, 404)
+        # check success value.
         self.assertEqual(data['success'], False)
+        # check error message value.
         self.assertEqual(data['message'], 'Resource not found')
 
     def test_delete_question_success(self):
@@ -75,6 +77,7 @@ class TriviaTestCase(unittest.TestCase):
             category=self.new_question['category'],
             difficulty=self.new_question['difficulty']
         )
+        # Insert the question in the test db.
         question.insert()
 
         # total questions before deletion
@@ -88,8 +91,9 @@ class TriviaTestCase(unittest.TestCase):
         # total questions after deletion
         questions_after = Question.query.all()
 
-        # check status code and success message
+        # check status code.
         self.assertEqual(response.status_code, 200)
+        # check success message value.
         self.assertEqual(data['success'], True)
 
         # Check difference in total question after deletion
@@ -106,9 +110,11 @@ class TriviaTestCase(unittest.TestCase):
         response = self.client().delete(f'questions/100000')
         data = json.loads(response.data)
 
-        # Check status code, success and message
+        # Check status code.
         self.assertEqual(response.status_code, 404)
+        # Check success value.
         self.assertEqual(data['success'], False)
+        # Check error message.
         self.assertEqual(data['message'], 'Resource not found')
 
     def test_create_new_question(self):
@@ -148,9 +154,11 @@ class TriviaTestCase(unittest.TestCase):
         # get number of questions after post
         questions_after = Question.query.all()
 
-        # check status code and success message
+        # check status code.
         self.assertEqual(response.status_code, 400)
+        # check success value.
         self.assertEqual(data['success'], False)
+        # check error message.
         self.assertEqual(data['message'], 'Bad request')
 
         # check if questions_after and questions_before are equal
@@ -164,8 +172,9 @@ class TriviaTestCase(unittest.TestCase):
                                       json={'searchTerm': 'What'})
         data = json.loads(response.data)
 
-        # check response status code and message
+        # check response status code.
         self.assertEqual(response.status_code, 201)
+        # check success value.
         self.assertEqual(data['success'], True)
 
         # Check that number of results = 8
@@ -182,9 +191,11 @@ class TriviaTestCase(unittest.TestCase):
                                       json={'searchTerm': 'randomrandomrandom'})
         data = json.loads(response.data)
 
-        # check response status code and message
+        # check response status code.
         self.assertEqual(response.status_code, 404)
+        # check success value.
         self.assertEqual(data['success'], False)
+        # check error message.
         self.assertEqual(data['message'], 'Resource not found')
 
     def test_get_questions_by_category(self):
@@ -194,8 +205,9 @@ class TriviaTestCase(unittest.TestCase):
         response = self.client().get('/categories/4/questions')
         data = json.loads(response.data)
 
-        # check response status code and message
+        # check response status code.
         self.assertEqual(response.status_code, 200)
+        # check success value.
         self.assertEqual(data['success'], True)
 
         # Check that the category has questions
@@ -211,9 +223,11 @@ class TriviaTestCase(unittest.TestCase):
         response = self.client().get('/categories/0/questions')
         data = json.loads(response.data)
 
-        # check response status code and message
+        # check response status code.
         self.assertEqual(response.status_code, 404)
+        # check success value.
         self.assertEqual(data['success'], False)
+        # check error message.
         self.assertEqual(data['message'], 'Resource not found')
 
     def test_play_quiz_game(self):
@@ -225,9 +239,11 @@ class TriviaTestCase(unittest.TestCase):
                                             'quiz_category': {'type': 'History', 'id': '4'}})
         data = json.loads(response.data)
 
-        # check response status code and message
+        # check response status code.
         self.assertEqual(response.status_code, 201)
+        # check success value.
         self.assertEqual(data['success'], True)
+        # check for the existance of the questions property in the response.
         self.assertTrue(data['question'])
 
         # Check that the question returned is in the correct category
@@ -245,12 +261,14 @@ class TriviaTestCase(unittest.TestCase):
         response = self.client().post('/quizzes', json={})
         data = json.loads(response.data)
 
-        # check response status code and message
+        # check response status code.
         self.assertEqual(response.status_code, 400)
+        # check success value.
         self.assertEqual(data['success'], False)
+        # check error message.
         self.assertEqual(data['message'], 'Bad request')
 
 
-# Make the tests conveniently executable
+# Make the tests conveniently executable as a script.
 if __name__ == "__main__":
     unittest.main()
