@@ -6,7 +6,8 @@ from dotenv import dotenv_values
 
 config = dotenv_values('.env')
 
-
+# URI for the local db. The values should be retrieved from the environment variables
+# existing in the .env file.
 DB_URI = {
     'drivername': config['DRIVER_NAME'],
     'username': config['USERNAME'],
@@ -16,17 +17,19 @@ DB_URI = {
     'database': config['DB_NAME']
 }
 
+# Create the db path
 database_path = URL(**DB_URI)
 
+# Create and instance of the db
 db = SQLAlchemy()
-
-'''
-setup_db(app)
-    binds a flask application and a SQLAlchemy service
-'''
 
 
 def setup_db(app, database_path=database_path):
+    '''
+    binds a flask application and a SQLAlchemy service
+    @param: app: instance of the flask application.
+    @param: database_path: a path for the local db.
+    '''
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
@@ -36,7 +39,7 @@ def setup_db(app, database_path=database_path):
 
 '''
 Question
-
+Creates a db model fro the questions table.
 '''
 
 
@@ -78,7 +81,7 @@ class Question(db.Model):
 
 '''
 Category
-
+Creates a db model for the categories table.
 '''
 
 
