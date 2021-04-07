@@ -27,7 +27,10 @@ def create_app(test_config=None):
     ##### MAIN ENDPOINTS #####
     @app.route('/categories')
     def retrieve_categories():
-        """Returns a JSON response with the available categories"""
+        """
+        Returns a JSON response with the available categories
+        Sample: curl http://127.0.0.1:5000/categories
+        """
         try:
             categories = Category.query.order_by(Category.id).all()
 
@@ -46,7 +49,10 @@ def create_app(test_config=None):
 
     @app.route('/questions')
     def retrieve_paginated_questions():
-        """Returns trivia questions paginated by the specified QUESTIONS_PER_PAGE value from the utils.py file"""
+        """
+        Returns trivia questions paginated by the specified QUESTIONS_PER_PAGE value from the utils.py file
+        Sample: curl http://127.0.0.1:5000/questions
+        """
         try:
             questions = Question.query.order_by(Question.id).all()
 
@@ -71,7 +77,10 @@ def create_app(test_config=None):
 
     @app.route('/questions/<int:question_id>', methods=['DELETE'])
     def delete_question(question_id):
-        """Delete a question using its id retrieved from the front-end"""
+        """
+        Delete a question using its id retrieved from the front-end
+        Sample: curl http://127.0.0.1:5000/questions/6 -X DELETE
+        """
         exists = True
         try:
             question = Question.query.get(question_id)
@@ -97,6 +106,12 @@ def create_app(test_config=None):
         """
         Create a new question and add it to the db
         Returns JSON object with newly created question, as well as paginated questions.
+        Sample: curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{
+            "question": "In which year did the egyptian revolution occur?", 
+            "answer": "2011", 
+            "difficulty": 2, 
+            "category": "4"
+            }'
         """
         question_objects = Question.query.all()
         questions_literals = [qn.format()['question']
@@ -135,8 +150,9 @@ def create_app(test_config=None):
     @app.route('/search', methods=['POST'])
     def search_for_a_question():
         """
-        Search for a list of questions based on a search term
+        Search for a list of questions based on a search term.
         Returns JSON object with paginated matching questions.
+        Sample: curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"searchTerm": "what"}'
         """
         try:
             data = request.get_json()
@@ -168,7 +184,7 @@ def create_app(test_config=None):
         """
         Gets questions by category id using url parameters.
         Returns JSON object with paginated matching results.
-
+        Sample: curl http://127.0.0.1:5000/categories/1/questions
         """
         try:
             category = Category.query.get(category_id).type
@@ -195,6 +211,13 @@ def create_app(test_config=None):
         Lets the user play a game of trivia.
         Uses JSON request parameters of category and previous questions.
         Returns JSON object with random question that hasn't been provided before.
+        Sample: curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type: application/json" -d '{
+            "previous_questions": [9, 5], 
+            "quiz_category": {
+                "type": "History", 
+                "id": "4"
+                }
+            }'
         """
         data = request.get_json()
         previous_questions = data.get('previous_questions', None)
@@ -231,6 +254,16 @@ def create_app(test_config=None):
         }), 201
 
     ##### ERROR HANDLING #####
+    """
+    Errors are returned as JSON and are formatted in the following manner:
+
+        {
+            "success": False,
+            "error": 404,
+            "message": "resource not found"
+        }
+
+    """
 
     @app.errorhandler(404)
     def not_found(error):
