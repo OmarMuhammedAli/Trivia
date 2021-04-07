@@ -178,7 +178,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
         # Check that number of results = 8
-        self.assertEqual(len(data['questions']), 8)
+        self.assertEqual(len(data['questions']), 9)
 
         # Check the id of the first result in response
         self.assertEqual(data['questions'][0]['id'], 2)
