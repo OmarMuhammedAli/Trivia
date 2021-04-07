@@ -188,7 +188,9 @@ class TriviaTestCase(unittest.TestCase):
 
         # send post request with search term that should fail
         response = self.client().post('/search',
-                                      json={'searchTerm': 'randomrandomrandom'})
+                                      json={
+                                          'searchTerm': 'randomrandomrandom'
+                                      })
         data = json.loads(response.data)
 
         # check response status code.
@@ -236,7 +238,11 @@ class TriviaTestCase(unittest.TestCase):
         # send post request with category and previous questions
         response = self.client().post('/quizzes',
                                       json={'previous_questions': [9, 5, 12],
-                                            'quiz_category': {'type': 'History', 'id': '4'}})
+                                            'quiz_category': {
+                                                'type': 'History',
+                                                'id': '4'
+                                      }
+                                      })
         data = json.loads(response.data)
 
         # check response status code.

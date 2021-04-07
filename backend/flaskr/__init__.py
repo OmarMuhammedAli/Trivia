@@ -11,7 +11,7 @@ def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
 
-    ##### CORS SETUP #####
+    # CORS SETUP #
     # Allow all origins to access any endpoint by setting up CORS
     CORS(app, resources={'/*': {'origins': '*'}})
 
@@ -24,7 +24,7 @@ def create_app(test_config=None):
                              'GET, POST, PATCH, DELETE, OPTIONS')
         return response
 
-    ##### MAIN ENDPOINTS #####
+    # MAIN ENDPOINTS #
     @app.route('/categories')
     def retrieve_categories():
         """
@@ -37,7 +37,8 @@ def create_app(test_config=None):
             if len(categories) < 1:
                 abort(404)
 
-            # Use the format_category_list utility to return a category on the format expected by the front-end
+            # Use the format_category_list utility to return a category on the
+            # format expected by the front-end
             formatted_categories = format_category_list(categories)
             return jsonify({
                 'success': True,
@@ -50,7 +51,8 @@ def create_app(test_config=None):
     @app.route('/questions')
     def retrieve_paginated_questions():
         """
-        Returns trivia questions paginated by the specified QUESTIONS_PER_PAGE value from the utils.py file
+        Returns trivia questions paginated by the specified QUESTIONS_PER_PAGE
+        value from the utils.py file
         Sample: curl http://127.0.0.1:5000/questions
         """
         try:
@@ -59,7 +61,8 @@ def create_app(test_config=None):
             # Get paginated questions formatted.
             paginated_questions = paginate_questions(request, questions)
             if len(paginated_questions) < 1:
-                # This mechanism is used to inform the UI if there are no questions present.
+                # This mechanism is used to inform the UI if there are no
+                # questions present.
                 abort(404)
 
             categories = Category.query.order_by(Category.id).all()
@@ -91,7 +94,8 @@ def create_app(test_config=None):
             question.delete()
         except:
             if not exists:
-                # This mechanism is used to inform the UI if there are no questions present.
+                # This mechanism is used to inform the UI if there are no
+                # questions present.
                 abort(404)
             else:
                 abort(500)
@@ -105,11 +109,12 @@ def create_app(test_config=None):
     def submit_question():
         """
         Create a new question and add it to the db
-        Returns JSON object with newly created question, as well as paginated questions.
+        Returns JSON object with newly created question, as well as paginated
+        questions.
         Sample: curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{
-            "question": "In which year did the egyptian revolution occur?", 
-            "answer": "2011", 
-            "difficulty": 2, 
+            "question": "In which year did the egyptian revolution occur?",
+            "answer": "2011",
+            "difficulty": 2,
             "category": "4"
             }'
         """
@@ -152,7 +157,9 @@ def create_app(test_config=None):
         """
         Search for a list of questions based on a search term.
         Returns JSON object with paginated matching questions.
-        Sample: curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"searchTerm": "what"}'
+        Sample: curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{
+        "searchTerm": "what"
+        }'
         """
         try:
             data = request.get_json()
@@ -210,11 +217,12 @@ def create_app(test_config=None):
         """
         Lets the user play a game of trivia.
         Uses JSON request parameters of category and previous questions.
-        Returns JSON object with random question that hasn't been provided before.
+        Returns JSON object with random question that hasn't been provided
+        before.
         Sample: curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type: application/json" -d '{
-            "previous_questions": [9, 5], 
+            "previous_questions": [9, 5],
             "quiz_category": {
-                "type": "History", 
+                "type": "History",
                 "id": "4"
                 }
             }'
@@ -253,7 +261,7 @@ def create_app(test_config=None):
             'question': question.format()
         }), 201
 
-    ##### ERROR HANDLING #####
+    # ERROR HANDLING #
     """
     Errors are returned as JSON and are formatted in the following manner:
 
