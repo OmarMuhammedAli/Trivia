@@ -154,7 +154,7 @@ class QuizView extends Component {
       .toLowerCase();
     const answerArray = this.state.currentQuestion.answer
       .toLowerCase()
-    return answerArray.includes(formatGuess);
+    return answerArray === formatGuess;
   };
 
   renderCorrectAnswer() {
