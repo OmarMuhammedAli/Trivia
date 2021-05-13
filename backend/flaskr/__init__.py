@@ -199,6 +199,8 @@ def create_app(test_config=None):
             questions = Question.query.order_by(Question.id).filter(
                 Question.category == str(category_id)).all()
             if len(questions) < 1:
+                # This mechanism is used to inform the UI that no questions
+                # are enlisted within this categore.
                 abort(404)
 
             formatted_question = paginate_questions(request, questions)
