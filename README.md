@@ -1,11 +1,11 @@
 # Full Stack Trivia API
-This appilcation is an interactive game where players can test their knowledge answering trivia questions. The main tasks were to create a Flask RESTful API, essential database models, and a test suite for implementing the following functionality:
+This application is an interactive game where players can test their knowledge answering trivia questions. The main tasks were to create a Flask RESTful API, essential database models, and a test suite for implementing the following functionality:
 
-1) Display questions - both all questions and by category. Questions should show the question, category and difficulty rating by default and can show/hide the answer. 
+1) Display questions - both all questions and by category. Questions should show the question, category and difficulty rating by default and can show/hide the answer.
 2) Delete questions.
 3) Add questions and require that they include question and answer text.
 4) Search for questions based on a text query string.
-5) Play the quiz game, randomizing either all questions or within a specific category. 
+5) Play the quiz game, randomizing either all questions or within a specific category.
 
 ## Getting Started
 
@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 ## Running the Frontend in Dev Mode
 
-The frontend app was built using create-react-app. In order to run the app in development mode use ```npm start```. You can change the script in the ```package.json``` file. 
+The frontend app was built using create-react-app. In order to run the app in development mode use ```npm start```. You can change the script in the ```package.json``` file.
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser. The page will reload if you make edits.<br>
 
@@ -107,13 +107,13 @@ The user may encounter 3 types of errors using this API:
 
         {
             "categories": {
-                "1": "Science", 
-                "2": "Art", 
-                "3": "Geography", 
-                "4": "History", 
-                "5": "Entertainment", 
+                "1": "Science",
+                "2": "Art",
+                "3": "Geography",
+                "4": "History",
+                "5": "Entertainment",
                 "6": "Sports"
-            }, 
+            },
             "success": true
         }
 
@@ -380,31 +380,31 @@ This endpoit search for a list of questions based on a search term.
 * Sample: `curl http://127.0.0.1:5000/categories/1/questions`<br>
 
         {
-            "current_category": "Science", 
+            "current_category": "Science",
             "questions": [
                 {
-                    "answer": "The Liver", 
-                    "category": 1, 
-                    "difficulty": 4, 
-                    "id": 20, 
+                    "answer": "The Liver",
+                    "category": 1,
+                    "difficulty": 4,
+                    "id": 20,
                     "question": "What is the heaviest organ in the human body?"
-                }, 
+                },
                 {
-                    "answer": "Alexander Fleming", 
-                    "category": 1, 
-                    "difficulty": 3, 
-                    "id": 21, 
+                    "answer": "Alexander Fleming",
+                    "category": 1,
+                    "difficulty": 3,
+                    "id": 21,
                     "question": "Who discovered penicillin?"
-                }, 
+                },
                 {
-                    "answer": "Blood", 
-                    "category": 1, 
-                    "difficulty": 4, 
-                    "id": 22, 
+                    "answer": "Blood",
+                    "category": 1,
+                    "difficulty": 4,
+                    "id": 22,
                     "question": "Hematology is a branch of medicine involving the study of what?"
                 }
-            ], 
-            "success": true, 
+            ],
+            "success": true,
             "total_questions": 3
         }
 
@@ -424,7 +424,7 @@ This endpoit search for a list of questions based on a search term.
                 "difficulty": 4,
                 "id": 18,
                 "question": "How many paintings did Van Gogh sell in his lifetime?"
-            }, 
+            },
             "success": true
         }
 
