@@ -430,5 +430,5 @@ This endpoit search for a list of questions based on a search term.
 
 ## Authors
 
-The API (`__init__.py`), test suite (`test_flaskr.py`), Database models (`models.py`), Utilities (`utils.py`), and this README were authored by [Omar Muhammed Ali](https://github.com/OmarMuhammedAli).<br>
+The API (`backend/flaskr/__init__.py`), test suite (`backend/test_flaskr.py`), Database models (`backend/flaskr/models.py`), Utilities (`backend/flaskr/utils.py`), and this README were authored by [Omar Muhammed Ali](https://github.com/OmarMuhammedAli).<br>
 The front-end was provided by [Udacity](https://www.udacity.com/) as part of the graduation projects of the Full-Stack Nanodegree.
