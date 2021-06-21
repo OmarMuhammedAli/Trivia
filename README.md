@@ -92,7 +92,7 @@ Errors are returned as JSON and are formatted in the following manner:<br>
         "message": "resource not found"
     }
 
-The user may encounter 3 types of errors using this API:
+Example errors the user may incounter using Trivia API:
 
 * 400 – bad request
 * 404 – resource not found
